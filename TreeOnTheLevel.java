@@ -36,6 +36,7 @@ public class TreeOnTheLevel implements Comparator<String>{
 		
 		for(String s: result) {
 			if(s.split(",").length > 1) {
+				//TODO Criar try catch para pegar o caso de um nó sem valor (ex: (,LR))
 				nodes.put(s.split(",")[1], Integer.parseInt(s.split(",")[0]));
 			}
 			else {
