@@ -17,6 +17,7 @@ public class TreeOnTheLevel implements Comparator<String>{
 		// TODO Auto-generated method stub
 		Scanner scan = new Scanner(System.in);
 		String input = "";
+		Boolean complete = true;
 		
 		while(true) {
 			input += scan.nextLine()+" ";
@@ -28,23 +29,33 @@ public class TreeOnTheLevel implements Comparator<String>{
 		input = input.replace(")", "");
 		String[] result= input.split(" ");
 		
-		List<Integer> number = new ArrayList<Integer>();
-		List<String> position = new ArrayList<String>();
-		
 		TreeOnTheLevel comp = new TreeOnTheLevel();
 		Map<String, Integer> nodes = new TreeMap<String, Integer>(comp);
 		
 		for(String s: result) {
 			if(s.split(",").length > 1) {
 				//TODO Criar try catch para pegar o caso de um nó sem valor (ex: (,LR))
-				nodes.put(s.split(",")[1], Integer.parseInt(s.split(",")[0]));
+				try {
+					nodes.put(s.split(",")[1], Integer.parseInt(s.split(",")[0]));
+				} 
+				catch (NumberFormatException e) {
+					complete = false;
+				}
+				
 			}
 			else {
 				nodes.put("A", Integer.parseInt(s.split(",")[0]));
 			}
 			
 		}
-		System.out.println(nodes.values());
+		
+		if(complete) {
+			System.out.println(nodes.values());
+		}
+		else {
+			System.out.println("not completed");
+		}
+		
 		
 	}
 	
