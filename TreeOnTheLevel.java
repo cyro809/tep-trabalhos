@@ -1,13 +1,8 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 
@@ -34,7 +29,6 @@ public class TreeOnTheLevel implements Comparator<String>{
 		
 		for(String s: result) {
 			if(s.split(",").length > 1) {
-				//TODO Criar try catch para pegar o caso de um nó sem valor (ex: (,LR))
 				try {
 					nodes.put(s.split(",")[1], Integer.parseInt(s.split(",")[0]));
 				} 
@@ -48,15 +42,33 @@ public class TreeOnTheLevel implements Comparator<String>{
 			}
 			
 		}
+		Set<String> keys = nodes.keySet();
+		String[] paths = keys.toArray(new String[keys.size()]);
 		
+		if(!nodes.containsKey("A")) {
+			complete = false;
+		}
+		
+		for(int i=paths.length-1;i>paths.length/2;i--) {
+			for(int j=paths[i].length();j>0;j--) {
+				if(!nodes.containsKey(paths[i].substring(0, j))) {
+					complete = false;
+					break;
+				}
+				
+				if(!complete) break;
+			}
+		}
 		if(complete) {
-			System.out.println(nodes.values());
+			for(int i=0;i<nodes.size();i++) {
+				System.out.print(nodes.values().toArray()[i]+" ");
+			}
 		}
 		else {
 			System.out.println("not completed");
 		}
 		
-		
+		scan.close();
 	}
 	
 	public int compare(String s1, String s2) {
