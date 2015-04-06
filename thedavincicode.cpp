@@ -2,8 +2,8 @@
 #include <iostream>
 #include<math.h>
 #include <cstdio>
-#include <stack>
-#include <list>
+#include <map>
+#include <vector>
 #include <algorithm>
 #include <cstdlib>
 #include <sstream>
@@ -23,17 +23,13 @@ int indiceFibonacci(double f) {
 void fiboSequence(int n, map<int,int> &fb){
     int first = 0, second = 1, next, c;
 
-   for ( c = 1 ; c < n ; c++ )
+   for ( c = 0 ; c < n ; c++ )
    {
-      if ( c <= 1 )
-         next = c;
-      else
-      {
-         next = first + second;
-         first = second;
-         second = next;
-      }
-      fb.push_back(pair<int,int>(next, c));
+      next = first + second;
+      first = second;
+      second = next;
+      cout<<"NUM= "<<next<<" ---- Index: "<<c<<endl;
+      fb.insert(pair<int,int>(next, c));
    }
 }
 
@@ -41,9 +37,9 @@ int main()
 {
     int test_cases;
     int n;
-
+    string line = "";
     cin>>n;
-
+    int cont = 0;
     vector<int> fib_code;
     vector<char> code;
 
@@ -52,16 +48,37 @@ int main()
     vector<char> result;
 
 
-    cin>>code;
     for(int i=0;i<n;i++) {
-        cin>>fib_code[i];
+        int f;
+        scanf("%d", &f);
+        fib_code.push_back(f);
+        result.push_back(' ');
     }
-    for(int i=0;i<n;i++) {
-        char c;
-        cin>>c
-        if(c >= 'A' && c <= 'Z')
+    char c;
+    scanf("%c", &c);
+    while(true) {
+        scanf("%c", &c);
+
+        if ( c == '\n') break;
+        if(((c >= 'A') && (c <= 'Z')) || (c == ' ')){
+            cout<<c<<endl;
+            cont++;
             code.push_back(c);
+        }
+
     }
+
+    fiboSequence(cont, fibo_seque);
+    for(int i=0;i<cont;i++) {
+        result[fibo_seque[fib_code[i]]+1] = code[i];
+        cout<<"FIBO_CODE "<<fib_code[i]<<" ---- FIBO_SEQUE "<<fibo_seque[fib_code[i]]<<endl;
+
+    }
+
+    for(int i=0;i<n;i++) {
+        cout<<result[i];
+    }
+    cout<<endl;
 
     return 0;
 }
