@@ -33,52 +33,65 @@ int main()
     int test_cases;
     int n;
 
+
     cin>>test_cases;
 
     for(int t=0;t<test_cases;t++){
         cin>>n;
         int cont = 0;
+        int max_index = 0;
+
         vector<int> fib_code;
         vector<char> code;
 
         map<int, int> fibo_seque;
 
-        vector<char> result(100,' ');
+        vector<char> result;
 
+        for(int i=0;i<100;i++) {
+            result.push_back(' ');
+            code.push_back(' ');
+        }
 
         for(int i=0;i<n;i++) {
             int f;
+
             scanf("%d", &f);
+
             fib_code.push_back(f);
 
         }
+
         char c;
         scanf("%c", &c);
+
         while(true) {
             scanf("%c", &c);
 
             if ( c == '\n') break;
+
             if(((c >= 'A') && (c <= 'Z'))){
+                code[cont] = c;
                 cont++;
-                code.push_back(c);
-                //result.push_back(' ');
             }
-            else if(c == ' ') {
-                cont++;
-                //result.push_back(' ');
-            }
-
-
         }
 
-        fiboSequence(cont, fibo_seque);
+        fiboSequence(46, fibo_seque);
+
         for(int i=0;i<n;i++) {
-            result[fibo_seque[fib_code[i]]] = code[i];
+            if(fibo_seque.count(fib_code[i]) > 0){
+                result[fibo_seque[fib_code[i]]] = code[i];
+
+                if(max_index < fibo_seque[fib_code[i]]){
+                    max_index = fibo_seque[fib_code[i]];
+                }
+            }
         }
 
-        for(int i=0;i<result.size();i++) {
+        for(int i=0;i<=max_index;i++) {
             cout<<result[i];
         }
+
         cout<<endl;
 
         fib_code.clear();
@@ -89,6 +102,3 @@ int main()
 
     return 0;
 }
-
-
-
