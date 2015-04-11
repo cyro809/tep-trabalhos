@@ -11,6 +11,8 @@
 
 using namespace std;
 
+char line[1000001];
+
 vector<string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
     std::stringstream ss(s);
     std::string item;
@@ -26,10 +28,12 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 
+
+
 int main()
 {
     string input;
-    char line[1000000];
+
 
     int num;
     int max_frequency = 0;
@@ -38,7 +42,7 @@ int main()
 
     vector<string> arguments;
 
-    while(scanf("%d %s", &num, line) == 2) {
+    while(scanf("%d %s", &num, line) != EOF) {
 
         arguments.clear();
         word_frequency.clear();
@@ -82,6 +86,3 @@ int main()
 
     return 0;
 }
-
-
-
