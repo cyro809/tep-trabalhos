@@ -394,7 +394,7 @@ int main()
             cin>>num;
             white_spaces -= num;
         }
-        if(white_spaces <= k-1){
+        if(white_spaces < k-1){
             result = 0;
         }
         else{
