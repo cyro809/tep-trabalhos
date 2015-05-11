@@ -3,27 +3,32 @@
 #include <math.h>
 #include <algorithm>
 #include <stdio.h>
-#include <string.h>
+#include <string>
 #include <utility>
+#include <fstream>
+#include <sstream>
 
 
 using namespace std;
 
-vector<long long> states;
+vector<int> states;
 
-bool calculateStates(long long s, long long d, long long month){
+bool calculateStates(int s, int d, int month){
 
     if(month == 12){
-        long long max_year =0;
-        max_year = states[0];
-        for(long long i=0;i<states.size();i++){
+        int max_year =0;
+        if(states.size() > 0){
+            max_year = states[0];
+            for(int i=0;i<states.size();i++){
 
-            if(states[i] > max_year){
-                max_year = states[i];
+                if(states[i] > max_year){
+                    max_year = states[i];
+                }
             }
         }
 
-        if(max_year >= 0){
+
+        if(max_year > 0){
             cout<<max_year<<endl;
         }
         else{
@@ -34,9 +39,9 @@ bool calculateStates(long long s, long long d, long long month){
     }
 
 
-    vector<long long> months;
-    long long total =0;
-    long long year =0;
+    vector<int> months;
+    int total =0;
+    int year =0;
     bool deficit = true;
     for(int i=0;i<12;i++){
         months.push_back(s);
@@ -48,6 +53,7 @@ bool calculateStates(long long s, long long d, long long month){
 
 
     while(next_permutation(months.begin(),months.end())){
+
         deficit = true;
         for(int i=0;i<8;i++){
             total = 0;
@@ -63,8 +69,6 @@ bool calculateStates(long long s, long long d, long long month){
             states.push_back(year);
             break;
         }
-        else{
-        }
     }
     calculateStates(s,d,month+1);
     return true;
@@ -72,11 +76,10 @@ bool calculateStates(long long s, long long d, long long month){
 
 int main()
 {
-    long long d, s;
+    int d, s;
 
     while(cin>>s>>d){
         calculateStates(s,d,1);
-
 
         states.clear();
     }
