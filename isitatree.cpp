@@ -12,6 +12,14 @@
 
 using namespace std;
 
+int numRoots = 0;
+int root = -1;
+int test_case = 1;
+bool isTree = true;
+map<int,bool> visited;
+map<int, int> indegree;
+map<int,vector<int> > mapping;
+
 vector<int> make_vector(int a)
 {
     vector<int> v;
@@ -19,13 +27,13 @@ vector<int> make_vector(int a)
     return v;
 }
 
-void dfs(map<int, vector<int> > &mapping, map<int, bool> &visited, int n){
+void dfs(int n){
     visited[n] = true;
 
     vector<int>::iterator it;
     for(it = mapping[n].begin(); it != mapping[n].end(); it++){
         if(!visited[*it]){
-            dfs(mapping,visited, *it);
+            dfs(*it);
         }
     }
 }
@@ -33,16 +41,9 @@ void dfs(map<int, vector<int> > &mapping, map<int, bool> &visited, int n){
 int main()
 {
     int x,y;
-    int numRoots = 0;
-    int root = -1;
-    int test_case = 1;
-    bool isTree = true;
-    map<int,bool> visited;
-    map<int, int> indegree;
-    map<int,vector<int> > mapping;
+
     while(true){
         cin>>x>>y;
-
         if(x == -1 && y == -1)
             break;
         else if( x == 0 && y == 0){
@@ -55,28 +56,27 @@ int main()
                 }
                 if (numRoots > 1) {
                     isTree = false;
-                    cout<<"Case "<<test_case<<" is not a tree"<<endl;
+
                     break;
                 }
             }
-
-            if(numRoots == 0 && !isTree){
-                cout<<"Case "<<test_case<<" is not a tree"<<endl;
-            }
             if(isTree){
-                dfs(mapping, visited, root);
+                dfs(root);
                 map<int, bool>::iterator it2;
                 for( it2= visited.begin(); it2!= visited.end(); it2++){
                     if(!it2->second){
                         isTree = false;
-                        cout<<"Case "<<test_case<<" is not a tree"<<endl;
+
                         break;
                     }
                 }
             }
 
             if(isTree){
-                cout<<"Case "<<test_case<<" is a tree"<<endl;
+                cout<<"Case "<<test_case<<" is a tree."<<endl;
+            }
+            else{
+                cout<<"Case "<<test_case<<" is not a tree."<<endl;
             }
             mapping.clear();
             visited.clear();
@@ -87,41 +87,42 @@ int main()
             root= -1;
 
         }
-
-        if(mapping.find(x) == mapping.end()){
-            mapping.insert(pair<int,vector<int> >(x, make_vector(y)));
-            visited.insert(pair<int,bool>(x,false));
-            indegree.insert(pair<int,int>(x,0));
-            if(mapping.find(y) == mapping.end()){
-                vector<int> v;
-                mapping.insert(pair<int,vector<int> >(x, v));
-                visited.insert(pair<int,bool>(y,false));
-                indegree.insert(pair<int,int>(y,1));
+        else {
+            if(mapping.find(x) == mapping.end()){
+                mapping.insert(pair<int,vector<int> >(x, make_vector(y)));
+                visited.insert(pair<int,bool>(x,false));
+                indegree.insert(pair<int,int>(x,0));
+                if(mapping.find(y) == mapping.end()){
+                    vector<int> v;
+                    mapping.insert(pair<int,vector<int> >(y, v));
+                    visited.insert(pair<int,bool>(y,false));
+                    indegree.insert(pair<int,int>(y,1));
+                }
+                else{
+                    indegree[y] = indegree[y] + 1;
+                    if (indegree[y] > 1) {
+                        isTree = false;
+                    }
+                }
             }
             else{
-                indegree[y]++;
+                mapping[x].push_back(y);
 
-                if (indegree[y] > 1) {
-                    isTree = false;
+                if(mapping.find(y) == mapping.end()){
+                    vector<int> v;
+                    mapping.insert(pair<int,vector<int> >(y, v));
+                    visited.insert(pair<int,bool>(y,false));
+                    indegree.insert(pair<int,int>(y,1));
+                }
+                else{
+                    indegree[y] = indegree[y] + 1;
+                    if (indegree[y] > 1) {
+                        isTree = false;
+                    }
                 }
             }
         }
-        else{
-            mapping[x].push_back(y);
 
-            if(mapping.find(y) == mapping.end()){
-                vector<int> v;
-                mapping.insert(pair<int,vector<int> >(x, v));
-                visited.insert(pair<int,bool>(y,false));
-                indegree.insert(pair<int,int>(y,1));
-            }
-            else{
-                indegree[y]++;
-                if (indegree[y] > 1) {
-                    isTree = false;
-                }
-            }
-        }
 
     }
     return 0;
