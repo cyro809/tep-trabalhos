@@ -1,0 +1,38 @@
+commandos:
+	busca em largura produz o caminho mais curto entre um cara e todo mundo
+	fazer a busca de d até todo mundo
+	
+snow clearing:
+	somar distancia das ruas (em metros) e dividir por 20 km/h
+	
+morning walk:
+	caminho euleriano (quando a soma dos graus são pares)
+	determinar o grau de cada vertice
+	
+antenna placement:
+	cobrir todos os vertices por aresta
+	emparelhamento maximo
+	caminhos aumentantes
+	caminhos alternantes
+	fazer busca e achar caminhos alterantes (matching max grafos bipartidos)
+	cobertura de vertices (teorema de Konny)
+	conj. de vertices
+	
+Nuts n' Bolts:
+	linhas são porcas
+	colunas são parafusos
+	grafo bipartido
+	matching maximo
+	
+transportation system:
+	arvore geradora minima
+	
+artic system:
+	
+	
+sending e-mail:
+	algoritmo de dijsktra
+	
+lift hopping:
+	caminho mais curto
+	para cada andar tem um vertice para poder mudar de elevador
