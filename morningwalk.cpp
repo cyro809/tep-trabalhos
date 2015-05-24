@@ -13,8 +13,10 @@
 
 using namespace std;
 
-int *indegree;
-bool *visited;
+//int *indegree;
+//bool *visited;
+vector<bool> visited;
+vector<int> indegree;
 vector<vector<int> > mapping;
 
 void dfs(int n){
@@ -40,12 +42,14 @@ int main()
             euler = false;
 
         if(euler){
-            indegree = new int[n];
-            visited = new bool[n];
+            //indegree = new int[n];
+            //visited = new bool[n];
 
             for(int i=0;i<n;i++){
-                indegree[i] = 0;
-                visited[i] = false;
+//                indegree[i] = 0;
+//                visited[i] = false;
+                visited.push_back(false);
+                indegree.push_back(0);
                 vector<int> v;
                 mapping.push_back(v);
             }
@@ -54,6 +58,7 @@ int main()
                 indegree[c1]++;
                 indegree[c2]++;
                 mapping[c1].push_back(c2);
+                mapping[c2].push_back(c1);
             }
             dfs(c1);
             for(int i=0;i<n;i++){
@@ -70,8 +75,10 @@ int main()
         else{
             cout<<"Not Possible"<<endl;
         }
-        delete[] visited;
-        delete[] indegree;
+//        delete[] visited;
+//        delete[] indegree;
+        visited.clear();
+        indegree.clear();
         mapping.clear();
         euler = true;
     }
