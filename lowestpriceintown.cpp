@@ -30,29 +30,55 @@ vector<string> split(const string &s, char delim) {
 int main()
 {
     double price;
-    int m;
-    string line;
-    vector<string> numbers_strings;
-    vector<int> numbers;
-    
-    
-    vector<pair<int,int> > pack_price;
-    
-    cin>>price>>m;
-    
-    for(int i=0;i<m;i++){
-        int n, p;
-        
-        cin>>n>>p;
-        pack_price.push_back(pair<int,int>(n,p));
+    int M;
+    int test_case = 1;
+
+    while(cin>>price>>M){
+        vector<string> numbers_strings;
+        vector<int> numbers;
+        vector<pair<int,double> > pack_price;
+
+        for(int i=0;i<M;i++){
+            int n;
+            double p;
+
+            cin>>n>>p;
+            pack_price.push_back(pair<int,double>(n,p));
+        }
+
+        vector<double> dp(101, 0);
+
+        for (int k = 1; k <= 100; ++k)
+                dp[k] = price * k;
+        for (int i = 0; i < M; ++i)
+        {
+            int n = pack_price[i].first;
+            double p = pack_price[i].second;
+            for (int k = 0; k <= 100 - n; ++k)
+                for (int m = 1; m <= n; ++m)
+                    dp[k + m] = min(dp[k + m], dp[k] + p);
+        }
+
+        cin.ignore();
+
+        string line;
+        getline(cin, line);
+
+        numbers_strings = split(line, ' ');
+
+        for(unsigned int i=0; i<numbers_strings.size();i++){
+            int x = atoi(numbers_strings[i].c_str());
+            numbers.push_back(x);
+        }
+
+        cout<<"Case "<<test_case<<":"<<endl;
+
+        test_case++;
+
+        for(unsigned int i = 0; i<numbers.size();i++){
+            printf("Buy %d for $%.2f\n", numbers[i], dp[numbers[i]]);
+        }
     }
-    
-    getline(cin, line);
-    numbers_strings = split(line, ' ');
-    for(unsigned int i=0; i<numbers.size();i++){
-        int x = atoi(numbers_strings[i].c_str());
-        numbers.push_back(x);
-    }
-    
+
     return 0;
 }
